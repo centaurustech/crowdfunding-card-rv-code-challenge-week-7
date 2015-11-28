@@ -1,0 +1,14 @@
+@import 'reset';
+@import 'bourbon';
+
+html {
+    box-sizing: border-box;
+}
+// html
+
+*, 
+*:before, 
+*:after {
+    box-sizing: inherit;
+}
+// *, *:before, *:after
