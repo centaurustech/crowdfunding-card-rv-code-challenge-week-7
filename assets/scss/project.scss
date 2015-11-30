@@ -1,6 +1,19 @@
 @import 'reset';
 @import 'bourbon';
 
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+
+$color-black: #000;
+$color-gray: #999;
+$color-gray-dark: #333;
+$color-white: #fff;
+
+$transition-time: 500ms;
+$transition-method: ease-in-out;
+
+$card-width: 480px;
+$card-mq-mobile: $card-width;
+
 html {
     box-sizing: border-box;
 }
@@ -12,3 +25,238 @@ html {
     box-sizing: inherit;
 }
 // *, *:before, *:after
+
+.site {
+    padding: 100px 20px;
+}
+
+.card {
+
+    @include transition(box-shadow $transition-time $transition-method $transition-time);
+    -webkit-font-smoothing: antialiased;
+    box-shadow: 0 0 75px 0px rgba($color-black, 0.2);
+    color: $color-gray;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    margin: 0 auto 100px;
+    max-width: $card-width;
+    width: 100%;
+
+    &.card--open {
+        box-shadow: 0 20px 75px 0px rgba($color-black, 0.2);
+    }
+    // &.card--open
+
+    &__header {
+        @include transition(max-height $transition-time $transition-method $transition-time);
+        background-position: center;
+        max-height: 0;
+        position: relative;
+        z-index: 10;
+
+        .card--open & {
+            @include transition(max-height $transition-time $transition-method);
+            max-height: 260px;      
+        }
+        // .card--open & 
+
+    }
+    // &__header
+
+    &__body {
+        background-color: $color-white;
+        padding: 50px 40px;
+        position: relative;
+        z-index: 15;
+
+        p {
+            line-height: 1.4;
+            margin-bottom: 15px;
+
+            &:first-of-type {
+                margin-top: 30px;
+            }
+            // &:first-of-type
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+            // &:last-child 
+
+        }
+        // p
+
+    }
+    // &__body
+
+    &__footer {
+        @include linear-gradient(to right, #353844, #2e3f61);
+    }
+    // &__footer 
+
+    &__preview {
+        display: block;
+        max-width: 100%;
+    }
+    // &__preview 
+
+    &__title {
+        color: $color-black;
+        font-size: 36px;
+        font-weight: 700;
+    }
+    // &__title
+
+    &__subtitle {
+        color: $color-gray-dark;
+        font-size: 16px;
+        line-height: 1.2;
+        margin-top: 8px;
+    }
+    // &__subtitle
+
+}
+// .card
+
+.progress {
+    $height: 30px;
+    $label-offset: 40px;
+    @include linear-gradient(to right, #1365ea, #6b6592);
+    color: $color-white;
+    height: $height;
+    position: relative;
+
+    &:before {
+        background-color: #ffd200;
+        bottom: 0;
+        content: '';
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 46%;
+    }
+    // &:before
+
+    &:after,
+    &__label {
+        line-height: $height;
+        position: absolute;
+        text-shadow: 1px 1px 2px rgba($color-black, 0.1);
+        top: 0;
+    }
+    // &:after, &__label
+
+    &:after {
+        content: attr(data-percent) '%';
+        left: $label-offset;
+    }
+    // &:after 
+
+    &__label {
+        right: $label-offset;
+    }
+    // &__label
+
+}
+// .progress 
+
+[data-percent] {
+    
+    &:before {
+        width: 100%;
+    }
+    // &:before
+
+}
+// [data-percent] 
+
+@for $i from 1 through 100 {
+
+    [data-percent='#{$i}'] {
+
+        &:before {
+            width: $i * 1%;
+        }
+        // &:before
+
+    }
+    // [data-percent]
+
+}
+// @for $i from 1 through 100 
+
+.stats {
+    @include clearfix();
+    @include transition(height $transition-time $transition-method);
+    color: $color-white;
+    height: 0;
+    overflow: hidden;
+    position: relative;
+
+    .card--open & {
+        @include transition(height $transition-time $transition-method $transition-time);
+        height: 160px;
+
+        @media (min-width: $card-mq-mobile) {
+            height: 130px;
+        }
+        // @media
+
+    }
+    // .card--open &
+
+    &__item {
+        margin: 15px 0;
+        padding: 0 40px;
+        text-align: center;
+
+        @media (min-width: $card-mq-mobile) {
+            @include transform(translateY(-50%));
+            margin: 0;
+            position: absolute;
+            text-align: left;
+            top: 50%;
+            width: 50%;
+        }
+        // @media
+
+    }
+    // &__item
+
+    &__actual {
+    
+        @media (min-width: $card-mq-mobile) {
+            left: 0;
+        }
+        // @media
+
+    }
+    // &__actual 
+
+    &__goal {
+
+        @media (min-width: $card-mq-mobile) {
+            border-left: 2px solid #495165;
+            right: 0;
+        }
+        // @media
+
+    }
+    // &__goal
+
+    &__title {
+     
+    }
+    // &__title
+
+    &__amount {
+        font-size: 36px;
+        font-weight: 700;
+        margin-left: -1px;
+        margin-top: 5px;
+    }
+    // &__amount
+
+}
+// stats
